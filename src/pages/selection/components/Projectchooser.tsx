@@ -1,7 +1,11 @@
 import React from 'react';
 
-export default function ProjectChooser(props) {
-    const state = props.state;
+interface Props {
+    state: Any, // todo: import after done in parent and also put into seperate file 
+}
+
+
+const ProjectChooser: React.FC<Props>  = ( {state} ) => {
     const runGenerator = () =>{
         // needs state
         console.log("state run gen", state);
@@ -16,3 +20,4 @@ export default function ProjectChooser(props) {
         </>
     )
 }
+export default ProjectChooser

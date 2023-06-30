@@ -1,12 +1,13 @@
 import React, {useState, useEffect} from 'react'
+
 import './components.css'
 
-export default function ExpSelection(props) {
+const ExpSelection: React.FC = (props) => {
     const [skill, setSkill] = useState('')
     
     const callback = props.setSelection
 
-    const updateParentSelections = () => {
+    const updateParentSelections: void = () => {
         const data = {
             type: 'skill',
             payload: skill
@@ -35,4 +36,6 @@ export default function ExpSelection(props) {
         </div>
     )
 }
+
+export default ExpSelection
 
