@@ -1,25 +1,58 @@
 import React, { useState } from 'react';
+import { LangSelection } from '../../intefaces'
 
-function LanguageField(props) {
-   
-    const clsNames = ['default', 'prefered', 'dismissed']
+interface Props {
+    languages: string[],
+    selection: LangSelections,
+    setSelection: Any; // React reducer callback
+} 
+
+
+enum SelectChoice {
+    prefered = 'prefered',
+    dismissed = 'dismissed',
+    default = 'default'
+}
+
+interface LangSelectAction {
+    type: SelectChoice,
+    payload: string,
+}
+
+interface FieldProps {
+    language: string,
+    callback: Any, //type callback
+}
+
+interface FieldAction {
+    type: SelectChoice,
+    payload: string,
+}
+
+
+const LanguageField: React.FC<FieldProps> = ( {language, callback} )  => {
    
     const [idx, setIdx] = useState(0);
-    const clsName = clsNames[idx];
-    
+    const clsNames: string[] = [SelectChoice.default, SelectChoice.prefered, SelectChoice.dismissed]
+    const clsName: string = clsNames[idx];
 
-    const getNextIdx = () => {
+    const getNextIdx = (): number =>  {
         return idx < clsNames.length - 1 ? idx + 1 : 0
     }
 
 
-    const toggleActive = (e) => {
+    const toggleActive = (e): void => {
         e.preventDefault()
-        const nextIndex = getNextIdx()
+        const nextIndex: number = getNextIdx()
+        
         setIdx(nextIndex)
 
-        const action = {type: clsNames[nextIndex], payload: props.language}
-        props.callback(action)
+        // todo: need to type this
+        const action: FieldAction = {
+            type: clsNames[nextIndex],
+            payload: language
+        }
+        callback(action)
     }
 
 
@@ -27,32 +60,31 @@ function LanguageField(props) {
     <div className={`language_field box_shadow rounded ${clsName}`}
          onClick={(e) => toggleActive(e)} >
         <div className="language_field_inner">
-            {props.language}
+            {language}
         </div>
     </div>
     )
 }
 
-
-export default function LanguageSelection(props) {
-    const languages = props.languages;
-    const state = props.selection;
+const LanguageSelection: React.FC<Props> = ({ languages, selection, setSelection}) => {
+    //const languages = props.languages;
+    //const state = props.selection;
     
 
-    const prepareReduce = (action) => {
-        let prefered =  [];
-        let dismissed = [];
+    const prepareReduce = (action: LangSelectAction) => {
+        let prefered: string[] =  [];
+        let dismissed: string[] = [];
 
-        if (action.type === 'prefered'){
-            prefered = [...state.prefered, action.payload]
-
-        } else if (action.type === 'dismissed'){
-            prefered =  [...state.prefered.filter(ln => ln !== action.payload)],
-            dismissed = [...state.dismissed, action.payload]
+        if (action.type === SelectChoice.prefered){
+            prefered = [...selection.prefered, action.payload]
+            dismissed = [...selection.dismissed]
+        } else if (action.type === SelectChoice.dismissed){
+            prefered =  [...selection.prefered.filter(ln => ln !== action.payload)],
+            dismissed = [...selection.dismissed, action.payload]
         
-        } else if (action.type === 'default'){
-            prefered =  [...state.prefered].filter(ln => ln !== action.payload),
-            dismissed =  [...state.dismissed].filter(ln => ln !== action.payload)
+        } else if (action.type === SelectChoice.default){
+            prefered =  [...selection.prefered].filter(ln => ln !== action.payload),
+            dismissed =  [...selection.dismissed].filter(ln => ln !== action.payload)
         }
         const newState = {
             prefered: prefered,
@@ -61,11 +93,11 @@ export default function LanguageSelection(props) {
         return newState;
     }
 
-
-    const dispatch = (action) => {
+    // todo: in parent we need to define types for action and payload? 
+    const dispatch = (action: LangSelectAction) => {
         const newState = prepareReduce(action)
         const sendAction = {type: 'language', payload: newState}
-        props.setSelection(sendAction) 
+        setSelection(sendAction) 
     }
 
 
@@ -83,3 +115,5 @@ export default function LanguageSelection(props) {
     )
 }
 
+
+export default LanguageSelection
