@@ -1,0 +1,14 @@
+    .button_jump {
+        width: 20%;
+        padding: 2rem;
+        border: 2px solid black;
+        text-align: center;
+        margin: 0 auto;
+    }
+
+
+    .page__selection {
+    /*    background-color: red; */
+        margin: 0 auto;
+    }
+

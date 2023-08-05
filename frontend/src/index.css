@@ -1,0 +1,117 @@
+#root {
+  -webkit-text-size-adjust: 100%;
+  /* color definitions */
+    --primary-shade: green;
+  /* app wide size definitions */
+    
+
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+html, body {
+    
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+
+}
+
+h1, h2, h3 {
+    text-align: center;
+    color: var(--primary-shade);
+}
+
+#wrapper {
+    background: darkgrey;
+    padding: 1rem;
+    height: 100%;
+    width: 80%;
+    padding-top: 2rem;
+    margin: 0 auto;
+    
+}
+
+hr {
+    border-color: var(--primary-shade);
+}
+
+.box_shadow {
+  box-shadow: 4px 7px 10px 0px rgba(0, 0, 0, 0.25);
+}
+
+.rounded {
+    border-radius: 1.5rem;
+} 
+
+
+.button_action {
+    width: 20%;
+    padding: 2rem;
+    text-align: center;
+    margin: 0 auto;
+}
+
+
+.wheel {
+    margin: 0 auto;
+    width: 400px;
+    height: 400px;
+}
+
+
+
+
+
+@keyframes spinWheel {
+    from {
+    
+        transform: rotate(0);
+    }
+    to {
+    
+        transform: rotate(var(--spin-degree));
+    }
+}
+
+.wheel_spinning {
+    animation: spinWheel 2s ease-in-out;
+}
+
+
+.wheel_not_spinning {
+    transform: rotate(0);
+}
+
+
+
+.wheel__slice {
+    color: grey;
+}
+
+.wheel__slice_active {
+    color: green;
+}
+
+
+#wheel__wrapper {
+    background-color: grey;
+}
+
+.svg_wrapper {
+    margin: 0 auto;
+}
+
+#wheel__marker {
+    width: 2px;
+    height: 100px;
+    top: 80px;
+    margin: 0 auto;
+    background-color: green;
+}
+
+
+
